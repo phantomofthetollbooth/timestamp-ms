@@ -14,12 +14,20 @@ res.sendFile(path.join(__dirname, '/public', 'index.html'));
 
 app.get("/:date", function(req, res) {
     var date = moment(req.params.date);
+    var dateback = moment.unix(req.params.date);
     if(date.isValid()){
         var output = {
             unix:date.unix(),
             natural:date.format('MMMM DD, YYYY')
         };
-    }else{
+    }else if(dateback.isValid()){
+        output = {
+            unix:dateback.unix(),
+            natural:dateback.format('MMMM DD, YYYY')
+        };
+        
+    }else
+        {
         output = {
             unix:null,
             natural:null
